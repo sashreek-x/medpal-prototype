@@ -1,53 +1,121 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MedPal</title>
+  <title>MedPal – AI Health Diary</title>
+
   <style>
-    body { font-family: Arial; padding: 40px; background: #f4fdf6; }
-    textarea { width: 300px; height: 100px; }
-    button { padding: 10px; margin-top: 10px; }
-    pre { background: #fff; padding: 10px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4fdf6;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #2e7d32;
+    }
+
+    textarea {
+      width: 420px;
+      height: 120px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 10px;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background: #1b5e20;
+    }
+
+    .card {
+      margin-top: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 500px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .loading {
+      color: gray;
+      font-style: italic;
+    }
   </style>
 </head>
+
 <body>
 
   <h1>🩺 MedPal – AI Health Diary</h1>
+  <p>Enter your symptoms and get an AI-like structured summary.</p>
 
-  <textarea id="input" placeholder="Enter symptoms..."></textarea><br>
+  <textarea id="input" placeholder="e.g. I have fever, cough and headache for 2 days"></textarea><br>
   <button onclick="generate()">Generate Summary</button>
 
-  <h3>Output:</h3>
-  <pre id="output"></pre>
+  <div class="card">
+    <h3>Output:</h3>
+    <pre id="output">No data yet.</pre>
+  </div>
 
   <script>
     function generate() {
-  const input = document.getElementById("input").value.toLowerCase();
+      const input = document.getElementById("input").value.toLowerCase();
+      const outputBox = document.getElementById("output");
 
-  if (!input) {
-    alert("Please enter symptoms");
-    return;
-  }
+      if (!input) {
+        alert("Please enter symptoms");
+        return;
+      }
 
-  let symptoms = [];
+      // Show loading effect
+      outputBox.innerText = "Analyzing symptoms...";
+      outputBox.classList.add("loading");
 
-  if (input.includes("fever")) symptoms.push("Fever");
-  if (input.includes("headache")) symptoms.push("Headache");
-  if (input.includes("cough")) symptoms.push("Cough");
-  if (input.includes("cold")) symptoms.push("Cold");
+      setTimeout(() => {
+        let symptoms = [];
 
-  if (symptoms.length === 0) {
-    symptoms.push("General discomfort");
-  }
+        if (input.includes("fever")) symptoms.push("Fever");
+        if (input.includes("headache")) symptoms.push("Headache");
+        if (input.includes("cough")) symptoms.push("Cough");
+        if (input.includes("cold")) symptoms.push("Cold");
+        if (input.includes("pain")) symptoms.push("Body Pain");
+        if (input.includes("throat")) symptoms.push("Sore Throat");
 
-  const output = `
+        if (symptoms.length === 0) {
+          symptoms.push("General discomfort");
+        }
+
+        let duration = "Not specified";
+        if (input.includes("day")) duration = "Few days";
+        if (input.includes("week")) duration = "About a week";
+
+        let severity = "Mild";
+        if (input.includes("severe") || input.includes("high")) {
+          severity = "Moderate to Severe";
+        }
+
+        const result = `
 Symptoms: ${symptoms.join(", ")}
-Duration: Based on user input
-Severity: Mild
-Possible Concern: Common viral infection
-  `;
+Duration: ${duration}
+Severity: ${severity}
+Possible Concern: Common viral infection or seasonal illness
+        `;
 
-  document.getElementById("output").innerText = output;
-}
+        outputBox.classList.remove("loading");
+        outputBox.innerText = result;
+
+      }, 800); // small delay for realism
+    }
   </script>
 
 </body>
