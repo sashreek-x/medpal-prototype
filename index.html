@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MedPal</title>
+  <style>
+    body { font-family: Arial; padding: 40px; background: #f4fdf6; }
+    textarea { width: 300px; height: 100px; }
+    button { padding: 10px; margin-top: 10px; }
+    pre { background: #fff; padding: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1>🩺 MedPal – AI Health Diary</h1>
+
+  <textarea id="input" placeholder="Enter symptoms..."></textarea><br>
+  <button onclick="generate()">Generate Summary</button>
+
+  <h3>Output:</h3>
+  <pre id="output"></pre>
+
+  <script>
+    function generate() {
+      const input = document.getElementById("input").value;
+
+      if (!input) {
+        alert("Enter symptoms first");
+        return;
+      }
+
+      const output = `
+Symptoms: Headache, Fever
+Duration: 2 days
+Severity: Mild
+Possible Concern: Viral infection
+      `;
+
+      document.getElementById("output").innerText = output;
+    }
+  </script>
+
+</body>
+</html>
