@@ -21,22 +21,33 @@
 
   <script>
     function generate() {
-      const input = document.getElementById("input").value;
+  const input = document.getElementById("input").value.toLowerCase();
 
-      if (!input) {
-        alert("Enter symptoms first");
-        return;
-      }
+  if (!input) {
+    alert("Please enter symptoms");
+    return;
+  }
 
-      const output = `
-Symptoms: Headache, Fever
-Duration: 2 days
+  let symptoms = [];
+
+  if (input.includes("fever")) symptoms.push("Fever");
+  if (input.includes("headache")) symptoms.push("Headache");
+  if (input.includes("cough")) symptoms.push("Cough");
+  if (input.includes("cold")) symptoms.push("Cold");
+
+  if (symptoms.length === 0) {
+    symptoms.push("General discomfort");
+  }
+
+  const output = `
+Symptoms: ${symptoms.join(", ")}
+Duration: Based on user input
 Severity: Mild
-Possible Concern: Viral infection
-      `;
+Possible Concern: Common viral infection
+  `;
 
-      document.getElementById("output").innerText = output;
-    }
+  document.getElementById("output").innerText = output;
+}
   </script>
 
 </body>
