@@ -10,8 +10,8 @@ MedPal is a prototype health diary that converts user symptoms into structured s
 
 ## Tech Stack
 - HTML, CSS, JS
-- Google Gemini API (planned)
-- Firebase (planned)
+- Google Gemini API
+- Firebase 
 
 ## Live Demo
 https://sashreek-x.github.io/medpal-prototype/
